@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Carte Lavéo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <script src='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v2.15.0/mapbox-gl.css' rel='stylesheet' />
+  <style>
+    body { margin: 0; padding: 0; }
+    #map { position: absolute; top: 0; bottom: 0; width: 100%; }
+  </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+  mapboxgl.accessToken = 'pk.eyJ1IjoibGF6bm9zIiwiYSI6ImNtY3VxaXI1bDAyc3YyaXM4Y3k5ZTBqNmEifQ.4pp0AjrSwzgzoQq4ZSEwyQ'; // remplace ici
+
+  const map = new mapboxgl.Map({
+    container: 'map',
+    style: 'mapbox://styles/mapbox/streets-v12',
+    center: [-4.0083, 5.3489],
+    zoom: 6
+  });
+
+  const pressings = [
+    {
+      name: "Lavéo Yopougon",
+      coords: [-4.0932, 5.3262],
+      link: "https://wa.me/2250700000000?text=Bonjour%20Lavéo%20Yopougon"
+    },
+    {
+      name: "Lavéo Cocody",
+      coords: [-3.9905, 5.3556],
+      link: "https://wa.me/2250700001111?text=Bonjour%20Lavéo%20Cocody"
+    }
+  ];
+
+  pressings.forEach(p => {
+    const el = document.createElement('div');
+    el.style.backgroundImage = 'url("https://cdn-icons-png.flaticon.com/512/684/684908.png")';
+    el.style.width = '30px';
+    el.style.height = '30px';
+    el.style.backgroundSize = '100%';
+    el.style.cursor = 'pointer';
+
+    el.addEventListener('click', () => {
+      window.open(p.link, '_blank');
+    });
+
+    new mapboxgl.Marker(el)
+      .setLngLat(p.coords)
+      .setPopup(new mapboxgl.Popup().setText(p.name))
+      .addTo(map);
+  });
+</script>
+</body>
+</html>
